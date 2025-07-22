@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login with OTP</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #000000, #7743c4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .card {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .otp-box {
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .bt {
+      background: #9b59b6;
+      color: #fff;
+      padding: 12px 24px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 50%;
+      align-items: center;
+    }
+
+    .bt:hover {
+      background: #8e44ad;
+    }
+
+    #message.success {
+      color: #2ecc71;
+    }
+
+    #message.error {
+      color: #e74c3c;
+    }
+
+    #timer {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #f1c40f;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .otp-box {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Verify Your Email</h2>
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <button id="sendBtn" class="bt">Send OTP</button>
+
+    <p id="timer" class="hidden">OTP valid for: <span id="countdown">60</span>s</p>
+
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" class="otp-box" />
+      <input type="text" maxlength="1" class="otp-box" />
+      <input type="text" maxlength="1" class="otp-box" />
+      <input type="text" maxlength="1" class="otp-box" />
+      <input type="text" maxlength="1" class="otp-box" />
+      <input type="text" maxlength="1" class="otp-box" />
+    </div>
+
+    <button id="verifyBtn" class="bt">Verify OTP</button>
+    <p id="message" class="hidden"></p>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll(".otp-box");
+    const verifyBtn = document.getElementById("verifyBtn");
+    const sendBtn = document.getElementById("sendBtn");
+    const message = document.getElementById("message");
+    let countdown;
+    let timeLeft = 60;
+
+    function startTimer() {
+      clearInterval(countdown);
+      timeLeft = 60;
+      document.getElementById("timer").classList.remove("hidden");
+      document.getElementById("countdown").textContent = timeLeft;
+      verifyBtn.disabled = false;
+      sendBtn.disabled = true;
+
+      countdown = setInterval(() => {
+        timeLeft--;
+        document.getElementById("countdown").textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          verifyBtn.disabled = true;
+          sendBtn.disabled = false;
+          showError("OTP expired. Please request a new one.");
+        }
+      }, 1000);
+    }
+
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft" && index > 0) inputs[index - 1].focus();
+        else if (e.key === "ArrowRight" && index < inputs.length - 1) inputs[index + 1].focus();
+        else if (e.key === "Backspace" && input.value === "" && index > 0) inputs[index - 1].focus();
+      });
+
+      input.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const data = e.clipboardData.getData("text").trim();
+        if (/^\d{6}$/.test(data)) {
+          data.split("").forEach((num, i) => { if (inputs[i]) inputs[i].value = num; });
+        }
+      });
+    });
+
+    sendBtn.addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      if (!email.includes("@")) return showError("Enter a valid email address.");
+
+      fetch('/send-otp', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email })
+      })
+      .then(res => res.json())
+      .then(data => {
+        showSuccess(data.message || "OTP sent.");
+        startTimer();
+        inputs.forEach(input => { input.value = ""; input.style.borderColor = "#ccc"; });
+        inputs[0].focus();
+      });
+    });
+
+    verifyBtn.addEventListener("click", () => {
+      const userOTP = Array.from(inputs).map(i => i.value).join("");
+      if (userOTP.length < 6) return showError("Enter all 6 digits.");
+
+      fetch('/verify-otp', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ otp: userOTP })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          showSuccess("OTP Verified!");
+          inputs.forEach(i => i.style.borderColor = "green");
+          setTimeout(() => {
+            window.location.href = "/chat";
+          }, 1000);
+        } else {
+          showError("Invalid OTP");
+          inputs.forEach(i => i.style.borderColor = "red");
+        }
+      });
+    });
+
+    function showSuccess(msg) {
+      message.classList.remove("hidden", "error");
+      message.classList.add("success");
+      message.textContent = msg;
+    }
+
+    function showError(msg) {
+      message.classList.remove("hidden", "success");
+      message.classList.add("error");
+      message.textContent = msg;
+    }
+  </script>
+</body>
+</html>
