@@ -1,0 +1,190 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*:not(i) {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #ae9cff;
+  transition: background-color 0.4s ease;
+  cursor: none;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Show real cursor on inputs & buttons */
+input,
+textarea,
+button,
+.search-box input,
+.search-box button {
+  cursor: text;
+}
+.search-box button {
+  cursor: pointer;
+}
+
+/* Main container (dictionary box) */
+.container {
+  background-color: #ffffff;
+  width: 90vmin;
+  position: relative;
+  z-index: 999; /* above canvas & cursor */
+  margin: 100px auto;
+  padding: 80px 50px;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(38, 33, 61, 0.2);
+  transition: background-color 0.4s ease;
+}
+
+/* Search box styling */
+.search-box {
+  display: flex;
+  justify-content: space-between;
+}
+.search-box input {
+  padding: 5px;
+  width: 70%;
+  border: none;
+  outline: none;
+  border-bottom: 3px solid #ae9cff;
+  font-size: 16px;
+  background-color: transparent;
+  color: inherit;
+}
+.search-box input:focus {
+  border-bottom: 3px solid #6a00ff;
+}
+.search-box button {
+  width: 25%;
+  padding: 15px 0;
+  background-color: #ae9cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Dictionary result section */
+.result {
+  margin-top: 40px;
+}
+.result h3 {
+  font-size: 30px;
+  color: #1f194c;
+}
+.word {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.word button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #ae9cff;
+  cursor: pointer;
+}
+.details {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #b3b6d4;
+  margin: 10px 0 20px;
+}
+.word-meaning {
+  color: #575a7b;
+}
+.word-example {
+  color: #575a7b;
+  font-style: italic;
+  border-left: 5px solid #ae9cff;
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.error {
+  color: red;
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Dark mode */
+body.dark {
+  background-color: #1f1f2e;
+}
+body.dark .container {
+  background-color: #2a2a3d;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+body.dark .search-box input {
+  color: #eee;
+  border-bottom: 3px solid #6a00ff;
+}
+body.dark .search-box button {
+  background-color: #6a00ff;
+}
+body.dark .result h3,
+body.dark .word-meaning,
+body.dark .word-example,
+body.dark .details {
+  color: #eee;
+}
+body.dark .word-example {
+  border-left-color: #6a00ff;
+}
+body.dark #theme-toggle {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Theme Toggle */
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1000;
+  transition: 0.3s ease;
+}
+
+/* Glowing Cursor Star */
+#cursor-star {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 500;
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: transform 0.05s linear, opacity 0.2s;
+}
+
+/* Hide cursor star when hovering over container */
+.container:hover ~ #cursor-star {
+  opacity: 0;
+}
+
+/* Canvas background for star trail */
+#stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
