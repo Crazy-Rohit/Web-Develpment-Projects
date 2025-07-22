@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RmNews</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="logo-dark.png" alt="Dark Logo" class="logo-img dark-logo" />
+      <img src="logo-light.png" alt="Light Logo" class="logo-img light-logo" />
+      <h1 class="brand">RMNews</h1>
+    </div>
+    <nav>
+      <ul>
+        <li class="category" data-category="general">General</li>
+        <li class="category" data-category="technology">Tech</li>
+        <li class="category" data-category="business">Business</li>
+        <li class="category" data-category="entertainment">Entertainment</li>
+        <li class="category" data-category="sports">Sports</li>
+      </ul>
+      <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search news..." />
+        <button id="themeToggle" title="Toggle Theme">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="news-container" id="newsContainer"></div>
+    <div class="pagination">
+      <button id="prevPage">Previous</button>
+      <button id="nextPage">Next</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 RMNews. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
