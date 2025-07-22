@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Credit Card</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ╭─ Navigation ───────────────────────────────╮ -->
+  <header class="navbar">
+    <div class="logo">⚡</div>
+
+    <nav class="nav-links desktop-only">
+      <a href="#">Features</a><a href="#">Pricing</a><a href="#">Help</a>
+      <a href="#">Blog</a><a href="#">About&nbsp;Us</a>
+    </nav>
+
+    <div class="auth-buttons desktop-only">
+      <button class="btn login">Log&nbsp;In</button>
+      <button class="btn signup">Sign&nbsp;Up</button>
+    </div>
+
+    <div class="hamburger mobile-only" id="hamburger">&#9776;</div>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-header">
+        <div class="logo">⚡</div>
+        <div class="close-btn" id="closeMenu">&times;</div>
+      </div>
+      <nav class="mobile-nav">
+        <a href="#">Features</a><a href="#">Pricing</a><a href="#">Help</a>
+        <a href="#">Blog</a><a href="#">About&nbsp;Us</a>
+        <a href="#">Log&nbsp;In</a><a href="#">Sign&nbsp;Up</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ╰────────────────────────────────────────────╯ -->
+
+  <!-- ╭─ Hero Section ─────────────────────────────╮ -->
+  <main class="hero-section">
+    <div class="text-content">
+      <p class="subheading">✨ Start Saving Smarter</p>
+      <h1>Smart Credit Card<br><span>For Your Daily Life.</span></h1>
+      <button class="download-btn">⬇ Download Now</button>
+    </div>
+
+    <!-- 3‑D Card -->
+    <div class="card-container">
+      <div class="credit-card" id="creditCard">
+        <!-- Front -->
+        <div class="card-face card-front">
+          <div class="card-logo">💳</div>
+          <div class="card-chip"></div>
+          <div class="card-number">1234 5678 9012 3456</div>
+          <div class="card-info">
+            <span>JOHN DOE</span>
+            <span>12/26</span>
+          </div>
+        </div>
+
+        <!-- Back -->
+        <div class="card-face card-back">
+          <div class="mag-strip"></div>
+          <div class="cvv-label">CVV</div>
+          <div class="cvv-box">678</div>
+          <div class="signature-line"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- ╰────────────────────────────────────────────╯ -->
+
+  <script src="script.js"></script>
+</body>
+</html>
