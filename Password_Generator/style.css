@@ -1,0 +1,204 @@
+:root {
+  --bg: #f0f2f5;
+  --card-bg: #fff;
+  --text: #333;
+  --secondary-text: #555;
+  --input-bg: #f7f7f7;
+  --accent: #003049;
+  --tooltip-bg: #333;
+  --meter-bg: #ddd;
+}
+
+body.dark {
+  --bg: #1e1e1e;
+  --card-bg: #2c2c2c;
+  --text: #f0f0f0;
+  --secondary-text: #bbb;
+  --input-bg: #3a3a3a;
+  --accent: #2aa198;
+  --tooltip-bg: #222;
+  --meter-bg: #444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.password-generator-container {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+h1 {
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 24px;
+  font-size: 32px;
+}
+
+.password-display {
+  background-color: var(--input-bg);
+  padding: 15px;
+  border: 1px solid var(--meter-bg);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.password-text {
+  font-family: monospace;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.copy-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.copy-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.strength-text {
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.strength-meter {
+  height: 10px;
+  background-color: var(--meter-bg);
+  border-radius: 5px;
+  margin-bottom: 25px;
+}
+
+.strength-meter-fill {
+  height: 100%;
+  width: 30%;
+  border-radius: 5px;
+  background: green;
+}
+
+.password-options {
+  margin-bottom: 25px;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.option-item label {
+  font-size: 16px;
+  color: var(--secondary-text);
+}
+
+.length-value {
+  font-weight: bold;
+  color: var(--text);
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 10px 0;
+  height: 6px;
+  background: var(--meter-bg);
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.generate-btn:hover {
+  background-color: #001520;
+}
+
+.tooltip {
+  position: absolute;
+  right: 0;
+  background-color: var(--tooltip-bg);
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  bottom: 110%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip.visible {
+  opacity: 1;
+}
